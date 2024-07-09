@@ -1,0 +1,26 @@
+CREATE DATABASE wither;
+USE wither;
+
+CREATE TABLE user (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	password varchar(255) NOT NULL
+);
+
+CREATE TABLE post (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	text VARCHAR(255) NOT NULL,
+	created DATETIME NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES user (id)
+);
+
+CREATE TABLE comment (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT NOT NULL,
+	post_id INT NOT NULL,
+	text VARCHAR(255) NOT NULL,
+	created DATETIME NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES user (id),
+	FOREIGN KEY (post_id) REFERENCES post (id)
+);
