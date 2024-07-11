@@ -1,0 +1,78 @@
+:root {
+    --background-primary: black;
+    --text-primary: white;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+body {
+    background-color: var(--background-primary);
+}
+
+h1 {
+    font-size: 30px;
+    text-align: center;
+    padding: 7px;
+}
+
+main {
+    width: 100%;
+    height: calc(100vh - 48px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ajaxContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 300px;
+}
+
+h2 {    
+    font-size: 25px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin: 0 0 5px 5px;
+}
+
+form input {
+    margin-bottom: 15px;
+    background-color: transparent;
+    border: 1px solid lightgray;
+    color: var(--text-primary);
+}
+
+form input, form button {
+    border-radius: 5px;
+    padding: 4px;
+    &:focus {
+        outline: none;
+    }
+}
+
+form button {
+    border: none;
+    cursor: pointer;
+    color: black;
+}
+
+a {
+    cursor: pointer;
+    padding: 5px;
+    width: fit-content;
+    margin: 0 auto;
+    text-decoration: underline;
+}
