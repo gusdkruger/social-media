@@ -1,9 +1,9 @@
 <h2>Login</h2>
 <form action="../app/controller/user/login.php" method="POST">
     <label for="input-login">Email</label>
-    <input id="input-login" name="email" type="email" required>
+    <input id="input-login" name="email" type="email" maxlength="255" required>
     <label for="input-password">Password</label>
-    <input id="input-password" name="password" type="password" required>
+    <input id="input-password" name="password" type="password" maxlength="255" required>
     <button type="submit">Login</button>
 </form>
 <a id="nav-recover-password">Forgot password?</a>

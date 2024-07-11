@@ -1,6 +1,8 @@
 :root {
-    --background-primary: black;
-    --text-primary: white;
+    --background-primary: #F0F4F9;
+    --background-secondary: #FFFFFF;
+    --highlight: #0B57D0;
+    --text-primary: #000000;
 }
 
 * {
@@ -11,7 +13,7 @@
 }
 
 body {
-    background-color: var(--background-primary);
+    background-color: var(--background-secondary);
 }
 
 h1 {
@@ -33,9 +35,12 @@ main {
     flex-direction: column;
     gap: 15px;
     width: 300px;
+    border-radius: 10px;
+    background-color: var(--background-secondary);
+    padding: 15px;
 }
 
-h2 {    
+h2 {   
     font-size: 25px;
 }
 
@@ -52,7 +57,6 @@ form input {
     margin-bottom: 15px;
     background-color: transparent;
     border: 1px solid lightgray;
-    color: var(--text-primary);
 }
 
 form input, form button {
@@ -66,7 +70,8 @@ form input, form button {
 form button {
     border: none;
     cursor: pointer;
-    color: black;
+    background-color: var(--highlight);
+    color: var(--background-secondary);
 }
 
 a {
@@ -74,5 +79,15 @@ a {
     padding: 5px;
     width: fit-content;
     margin: 0 auto;
-    text-decoration: underline;
+    color: var(--highlight);
+}
+
+@media (width > 425px) {
+    body {
+        background-color: var(--background-primary);
+    }
+
+    #ajaxContainer {
+        border: 1px solid lightgray;
+    }
 }
