@@ -1,6 +1,6 @@
 function loadPage(page) {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', '../app/views/' + page + '.html', true);
+    xhr.open('GET', '../app/views/ajax/' + page + '.html', true);
     xhr.onload = function() {
         if(this.status === 200) {
             document.getElementById('ajaxContainer').innerHTML = this.responseText;
@@ -19,12 +19,12 @@ function attachEventListeners() {
     const loginBtn = document.getElementById('nav-login');
     if(recoverPasswordBtn) {
         recoverPasswordBtn.onclick = function() {
-            loadPage('recover-password');
+            loadPage('recover');
         };
     }
     if(signUpBtn) {
         signUpBtn.onclick = function() {
-            loadPage('sign-up');
+            loadPage('register');
         };
     }
     if(loginBtn) {
