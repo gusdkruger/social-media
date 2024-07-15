@@ -16,7 +16,7 @@ body {
     background-color: var(--background-secondary);
 }
 
-main {
+.center {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -24,7 +24,7 @@ main {
     align-items: center;
 }
 
-#ajaxContainer {
+.content {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -34,7 +34,7 @@ main {
     padding: 15px;
 }
 
-h2 {   
+h2 {
     font-size: 25px;
 }
 
