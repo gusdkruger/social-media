@@ -1,14 +1,14 @@
-<div class="center">
-    <div class="content">
-        <h2>Login</h2>
-        <form action="./src/controller/user/login.php" method="POST">
+<div class="ajax-Container">
+    <div class="ajax-Content">
+        <h2 class="ajax-title">Login</h2>
+        <form class="ajax-form" action="./src/controller/user/login.php" method="POST">
             <label for="input-email">Email</label>
             <input id="input-email" name="email" type="email" maxlength="255" required>
             <label for="input-password">Password</label>
             <input id="input-password" name="password" type="password" maxlength="255" required>
             <button type="submit">Login</button>
         </form>
-        <a hx-post="./src/view/html/recover-password.html" hx-target="main">Forgot password?</a>
-        <a hx-post="./src/view/html/register.html" hx-target="main">Create an account</a>
+        <a class="ajax-nav" hx-post="./src/view/html/recover-password.html" hx-target="main">Forgot password?</a>
+        <a class="ajax-nav" hx-post="./src/view/html/register.html" hx-target="main">Create an account</a>
     </div>
 </div>

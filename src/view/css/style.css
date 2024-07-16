@@ -16,7 +16,7 @@ body {
     background-color: var(--background-secondary);
 }
 
-.center {
+.ajax-Container {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -24,36 +24,33 @@ body {
     align-items: center;
 }
 
-.content {
+.ajax-Content {
     display: flex;
     flex-direction: column;
     gap: 15px;
     width: 300px;
     border-radius: 10px;
     background-color: var(--background-secondary);
-    padding: 15px;
+    padding: 20px;
 }
 
-h2 {
+.ajax-title {
     font-size: 25px;
 }
 
-form {
+.ajax-form {
     display: flex;
     flex-direction: column;
 }
 
-form label {
+.ajax-form label {
     margin: 0 0 5px 5px;
 }
 
-form input {
+.ajax-form input {
     margin-bottom: 15px;
     background-color: transparent;
     border: 1px solid lightgray;
-}
-
-form input, form button {
     border-radius: 5px;
     padding: 4px;
     &:focus {
@@ -61,14 +58,16 @@ form input, form button {
     }
 }
 
-form button {
+.ajax-form button {
     border: none;
     cursor: pointer;
     background-color: var(--highlight);
     color: var(--background-secondary);
+    padding: 6px 4px;
+    border-radius: 5px;
 }
 
-a {
+.ajax-nav {
     cursor: pointer;
     padding: 5px;
     width: fit-content;
@@ -79,9 +78,5 @@ a {
 @media (width > 425px) {
     body {
         background-color: var(--background-primary);
-    }
-
-    #ajaxContainer {
-        border: 1px solid lightgray;
     }
 }
