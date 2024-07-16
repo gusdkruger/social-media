@@ -10,6 +10,8 @@
             if($password === $_POST["password-repeat"]) {
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
                 UserModel::register($handle, $email, $passwordHash);
+                header("Location: ../../../index.php");
+                exit();
             }
             else {
                 echo "Passwords dont match";

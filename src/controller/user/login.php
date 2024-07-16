@@ -7,6 +7,8 @@
             $password = $_POST["password"];
             // VALIDATE DATA
             UserModel::login($email, $password);
+            header("Location: ../../../index.php");
+            exit();
         }
     }
 ?>

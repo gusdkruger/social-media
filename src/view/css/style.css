@@ -16,7 +16,7 @@ body {
     background-color: var(--background-secondary);
 }
 
-.ajax-Container {
+.ajax-container {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -24,7 +24,7 @@ body {
     align-items: center;
 }
 
-.ajax-Content {
+.ajax-content {
     display: flex;
     flex-direction: column;
     gap: 15px;

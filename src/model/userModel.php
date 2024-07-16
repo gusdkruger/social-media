@@ -1,5 +1,6 @@
 <?php
     include __DIR__ . "/../connection/connection.php";
+    include __DIR__ . "/../session/session.php";
 
     class UserModel {
 
@@ -11,7 +12,7 @@
             if($result) {
                 $passwordHash = $result["password"];
                 if(password_verify($password, $passwordHash)) {
-                    echo "Loged successfully";
+                    $_SESSION["logged"] = true;
                 }
                 else {
                     echo "Email not registred or incorrect password";
@@ -27,8 +28,8 @@
             $conn = DatabaseConnection::connect();
             $sql = "INSERT INTO user (handle, email, password) VALUES ('$handle', '$email', '$passwordHash');";
             try {
-                $conn -> exec($sql);
-                echo "User created successfully";
+                $conn->exec($sql);
+                $_SESSION["logged"] = true;
             }
             catch (PDOException $e) {
                 echo $e;
