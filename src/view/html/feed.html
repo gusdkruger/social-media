@@ -1,5 +1,9 @@
-<div class="ajax-container">
-    <form action="./src/controller/user/logout.php" method="POST">
-        <button type="submit">Logout</button>
-    </form>
+<div>
+    <!-- CREATE A POST HERE -->
+</div>
+<div id="post-container">
+    <h2 hx-post="./src/controller/post/readPost.php" hx-trigger="load" hx-target="#post-container">Loading posts</h2>
+</div>
+<div>
+    <!-- LOAD MORE POSTS WHEN THIS IS REVEALED -->
 </div>

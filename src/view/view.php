@@ -1,20 +1,28 @@
 <?php
     include __DIR__ . "/../session/session.php";
 
-    function loadHeader() {
-        return "\n";
-    }
+    class View {
 
-    function loadMain() {
-        if($_SESSION["logged"]) {
-            readfile(__DIR__ . "/html/feed.html");
+        public static function loadHeader() {
+            if($_SESSION["logged"]) {
+                readfile(__DIR__ . "/html/header.html");
+            }
+            else {
+                return "\n";
+            }
         }
-        else {
-            readfile(__DIR__ . "/html/login.html");
-        }
-    }
 
-    function loadFooter() {
-        return "\n";
+        public static function loadMain() {
+            if($_SESSION["logged"]) {
+                readfile(__DIR__ . "/html/feed.html");
+            }
+            else {
+                readfile(__DIR__ . "/html/login.html");
+            }
+        }
+
+        public static function loadFooter() {
+            return "\n";
+        }
     }
 ?>

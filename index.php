@@ -12,13 +12,13 @@
     </head>
     <body>
         <header>
-            <?= loadHeader() ?>
+            <?= View::loadHeader() ?>
         </header>
         <main>
-            <?= loadMain() ?>
+            <?= View::loadMain() ?>
         </main>
         <footer>
-            <?= loadFooter() ?>
+            <?= View::loadFooter() ?>
         </footer>
     </body>
 </html>
