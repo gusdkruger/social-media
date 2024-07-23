@@ -1,14 +1,14 @@
-<div class="ajax-container">
+<main class="ajax-container">
     <div class="ajax-content">
         <h2 class="ajax-title">Login</h2>
-        <form class="ajax-form" action="./src/controller/user/login.php" method="POST">
+        <form class="ajax-form" hx-post="/login" hx-ext="response-targets" hx-target-401="this" hx-swap="beforeend">
             <label for="input-email">Email</label>
             <input id="input-email" name="email" type="email" maxlength="255" required>
             <label for="input-password">Password</label>
             <input id="input-password" name="password" type="password" maxlength="255" required>
             <button type="submit">Login</button>
         </form>
-        <a class="ajax-nav" hx-post="./src/view/html/recover-password.html" hx-target="main">Forgot password?</a>
-        <a class="ajax-nav" hx-post="./src/view/html/register.html" hx-target="main">Create an account</a>
+        <a class="ajax-nav" style="text-decoration: line-through; cursor: default;">Forgot password?</a>
+        <a class="ajax-nav" hx-get="/teamplateSignup" hx-target=".ajax-container">Create an account</a>
     </div>
-</div>
+</main>
