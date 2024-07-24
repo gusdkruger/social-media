@@ -2,48 +2,32 @@
 
 class View {
 
-    public static function loadHeader() {
+    public static function loadHtml(): void {
+        require_once __DIR__ . "/../Session/Session.php";
+        readfile(__DIR__ . "/../../public/html/start.html");
         if($_SESSION["logged"]) {
             View::readTeamplateHeader();
-        }
-    }
-
-    public static function loadMain() {
-        if($_SESSION["logged"]) {
             View::readTeamplateFeed();
         }
         else {
             View::readTeamplateLogin();
         }
-    }
-
-    public static function loadFooter() {
-
-    }
-
-    public static function loadHtml() {
-        require_once __DIR__ . "/../Session/Session.php";
-        new Session();
-        readfile(__DIR__ . "/../../public/html/start.html");
-        View::loadHeader();
-        View::loadMain();
-        View::loadFooter();
         readfile(__DIR__ . "/../../public/html/end.html");
     }
 
-    public static function readTeamplateLogin() {
+    public static function readTeamplateLogin(): void {
         readfile(__DIR__ . "/../../public/html/login.html");
     }
 
-    public static function readTeamplateSignup() {
+    public static function readTeamplateSignup(): void {
         readfile(__DIR__ . "/../../public/html/signup.html");
     }
 
-    public static function readTeamplateHeader() {
+    public static function readTeamplateHeader(): void {
         readfile(__DIR__ . "/../../public/html/header.html");
     }
 
-    public static function readTeamplateFeed() {
+    public static function readTeamplateFeed(): void {
         readfile(__DIR__ . "/../../public/html/feed.html");
     }
 }

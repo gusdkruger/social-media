@@ -6,17 +6,10 @@ class ConnectionFactory {
         $servername = "localhost";
         $username = "root";
         $password = "";
-        try {
-            $conn = new PDO("mysql:host=$servername;dbname=wither", $username, $password);
-        }
-        catch(PDOException $e) {
-            echo $e->getMessage();
-            exit();
-        }
-        return $conn;
+        return new PDO("mysql:host=$servername;dbname=wither", $username, $password);
     }
 
-    public static function closeConnection(&$conn): void {
+    public static function closeConnection(PDO &$conn): void {
         $conn = null;
     }
 }

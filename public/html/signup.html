@@ -1,16 +1,17 @@
 <main class="ajax-container">
     <div class="ajax-content">
         <h2 class="ajax-title">Create an account</h2>
-        <form class="ajax-form" hx-post="/signup" hx-ext="response-targets" hx-target-400="this" hx-swap="beforeend">
+        <form class="ajax-form" hx-post="/signup" hx-ext="response-targets" hx-target-4*=".error-message" hx-target-5*=".error-message">
             <label for="input-handle">Handle</label>
-            <input id="input-handle" name="handle" type="text" maxlength="15" required>
+            <input id="input-handle" name="handle" type="text" minlength="3" maxlength="15" required>
             <label for="input-email">Email</label>
-            <input id="input-email" name="email" type="email" maxlength="255" required>
+            <input id="input-email" name="email" type="email" minlength="6" maxlength="255" required>
             <label for="input-password">Password</label>
-            <input id="input-password" name="password" type="password" maxlength="255" required>
+            <input id="input-password" name="password" type="password" minlength="6" maxlength="255" required>
             <label for="input-password-repeat">Repeat password</label>
-            <input id="input-password-repeat" name="password-repeat" type="password" maxlength="255" required>
+            <input id="input-password-repeat" name="password-repeat" type="password" minlength="6" maxlength="255" required>
             <button type="submit">Sign Up</button>
+            <p class='error-message'></p>
         </form>
         <a class="ajax-nav" hx-get="/teamplateLogin" hx-target=".ajax-container">Back to login</a>
     </div>

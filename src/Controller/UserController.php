@@ -1,51 +1,73 @@
 <?php
 
 include __DIR__ . "/../Model/UserModel.php";
+include __DIR__ . "/../View/HttpResponse.php";
 
 class UserController {
 
-    public static function login() {
+    public static function login(): void {
         if(isset($_POST["email"]) && isset($_POST["password"])) {
             $email = $_POST["email"];
             $password = $_POST["password"];
-            // VALIDATE EMAIL AND PASSWORD BEFORE CALLING UserModel::login()
+            UserController::validadeEmail($email);
+            UserController::validadePassword($password);
             if(UserModel::login($email, $password)) {
-                header("HX-Redirect: /feed");
-                exit();
-            }
-            else {
-                http_response_code(401);
-                echo "<p class='error-message'>Invalid email or password</p>";
-                exit();
+                HttpResponse::redirectToFeed();
             }
         }
+        HttpResponse::invalidLoginInfo();
     }
 
-    public static function logout() {
+    public static function logout(): void {
         require_once __DIR__ . "/../Session/Session.php";
-        new Session();
         $_SESSION["logged"] = false;
-        header("HX-Redirect: /");
-        exit();
+        HttpResponse::redirectToLogin();
     }
 
-    public static function signup() {
+    public static function signup(): void {
         if(isset($_POST["handle"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["password-repeat"])) {
             $handle = $_POST["handle"];
             $email = $_POST["email"];
             $password = $_POST["password"];
-            // VALIDATE HANDLE, EMAIL
+            UserController::validadeHanlde($handle);
+            UserController::validadeEmail($email);
+            UserController::validadePassword($password);
             if($password === $_POST["password-repeat"]) {
                 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                UserModel::register($handle, $email, $passwordHash);
-                header("HX-Redirect: /feed");
-                exit();
+                if(UserModel::signup($handle, $email, $passwordHash)) {
+                    HttpResponse::redirectToFeed();
+                }
             }
             else {
-                http_response_code(400);
-                echo "<p class='error-message'>Passwords don't match</p>";
-                exit();
+                HttpResponse::passwordsDontMatch();
             }
+        }
+    }
+
+    private static function validadeHanlde(string $handle): bool {
+        if(strlen($handle) >= 3 && strlen($handle) <= 15) {
+            return true;
+        }
+        else {
+            HttpResponse::invalidHandle();
+        }
+    }
+
+    private static function validadeEmail(string $email): bool {
+        if(strlen($email) >= 6 && strlen($email) <= 255 && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return true;
+        }
+        else {
+            HttpResponse::invalidEmail();
+        }
+    }
+
+    private static function validadePassword(string $password): bool {
+        if(strlen($password) >= 6 && strlen($password) <= 255) {
+            return true;
+        }
+        else {
+            HttpResponse::invalidPassword();
         }
     }
 }
