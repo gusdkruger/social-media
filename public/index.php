@@ -32,6 +32,10 @@ else if($_SERVER["PATH_INFO"] === "/feed" && $_SERVER["REQUEST_METHOD"] === "POS
     require_once __DIR__ . "/../src/Controller/PostController.php";
     PostController::getPostsBetween();
 }
+else if($_SERVER["PATH_INFO"] === "/createPost" && $_SERVER["REQUEST_METHOD"] === "POST") {
+    require_once __DIR__ . "/../src/Controller/PostController.php";
+    PostController::createPost();
+}
 else {
     http_response_code(404);
     echo "404 NOT FOUND<br>PATH: " . $_SERVER["PATH_INFO"] . "<br>METHOD: " . $_SERVER["REQUEST_METHOD"];

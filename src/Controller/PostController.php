@@ -1,6 +1,7 @@
 <?php
 
 include __DIR__ . "/../Model/PostModel.php";
+include __DIR__ . "/../View/HttpResponse.php";
 
 class PostController {
 
@@ -24,5 +25,24 @@ class PostController {
                 </div>";
         }
         exit();
+    }
+
+    public static function createPost() {
+        if(isset($_POST["post-text"])) {
+            $text = $_POST["post-text"];
+            PostController::validadePostText($text);
+            if(PostModel::createPost(7, $text)) {
+                HttpResponse::redirectToFeed();
+            }
+        }
+    }
+
+    private static function validadePostText(string $text): bool {
+        if(strlen($text) >= 3 && strlen($text) <= 255) {
+            return true;
+        }
+        else {
+            HttpResponse::invalidPostText();
+        }
     }
 }
