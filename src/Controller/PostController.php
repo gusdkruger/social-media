@@ -11,7 +11,17 @@ class PostController {
             $text = $post["text"];
             $created = $post["created"];
             $likeCount = $post["like_count"];
-            echo "<div><h2>$handle</h2><h3>$created</h3><h4>$likeCount</h4><p>$text<p></div>";
+            echo "<div class='post'>
+                    <div class='post__header'>
+                        <h2>@$handle</h2>
+                        <h3>$created</h3>
+                    </div>
+                    <p>$text<p>
+                    <div class='post__footer'>
+                        <h3>$likeCount</h4>
+                        <h2>Comments</h3>
+                    </div>
+                </div>";
         }
         exit();
     }

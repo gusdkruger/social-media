@@ -45,28 +45,22 @@ class HttpResponse {
     }
 
     public static function handlePdoException(PDOException $e): void {
+        http_response_code(500);
         $code = $e->getCode();
-            switch($code) {
-                case 0:
-                    http_response_code(500);
-                    echo "Could not find PDO_MYSQL driver";
-                    exit();
-                    break;
-                case 1049:
-                    http_response_code(500);
-                    echo "Database not found";
-                    exit();
-                    break;
-                case "42S02":
-                    http_response_code(500);
-                    echo "Database table not found";
-                    exit();
-                    break;
-                default:
-                    http_response_code(500);
-                    echo $e->getCode() . "<br><br>" . $e->getMessage();
-                    break;
-            }
+        switch($code) {
+            case 0:
+                echo "Could not find PDO_MYSQL driver";
+                break;
+            case 1049:
+                echo "Database not found";
+                break;
+            case "42S02":
+                echo "Database table not found";
+                break;
+            default:
+                echo $e->getCode() . "<br><br>" . $e->getMessage();
+                break;
+        }
         exit();
     }
 }
