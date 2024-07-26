@@ -1,5 +1,7 @@
 <?php
 
+namespace Wither\View;
+
 class HttpResponse {
     private const START_ERROR_MESSAGE = "<p class='error-message'>";
     private const END_ERROR_MESSAGE = "</p>";

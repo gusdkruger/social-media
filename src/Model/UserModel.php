@@ -1,6 +1,11 @@
 <?php
 
-include __DIR__ . "/../DatabaseConnection/ConnectionFactory.php";
+namespace Wither\Model;
+
+use Wither\DatabaseConnection\ConnectionFactory;
+use Wither\Session\Session;
+use Wither\View\HttpResponse;
+use \PDO;
 
 class UserModel {
 
@@ -11,13 +16,12 @@ class UserModel {
             $stmt->bindValue(":email", $email);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            require_once __DIR__ . "/../Session/Session.php";
+            new Session();
             $_SESSION["logged"] = $result && password_verify($password, $result["password"]);
             ConnectionFactory::closeConnection($conn);
             return $_SESSION["logged"];
         }
         catch(PDOException $e) {
-            require_once __DIR__ . "/../View/HttpResponse.php";
             HttpResponse::handlePdoException($e);
         }
     }
@@ -29,13 +33,12 @@ class UserModel {
             $stmt->bindValue(":handle", $handle);
             $stmt->bindValue(":email", $email);
             $stmt->bindValue(":passwordHash", $passwordHash);
-            require_once __DIR__ . "/../Session/Session.php";
+            new Session();
             $_SESSION["logged"] = $stmt->execute();
             ConnectionFactory::closeConnection($conn);
             return $_SESSION["logged"];
         }
         catch(PDOException $e) {
-            require_once __DIR__ . "/../View/HttpResponse.php";
             HttpResponse::handlePdoException($e);
         }
     }

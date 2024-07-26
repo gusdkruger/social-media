@@ -1,5 +1,9 @@
 <?php
 
+namespace Wither\DatabaseConnection;
+
+use PDO;
+
 class ConnectionFactory {
 
     public static function createConnection(): PDO {

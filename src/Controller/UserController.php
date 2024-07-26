@@ -1,7 +1,10 @@
 <?php
 
-include __DIR__ . "/../Model/UserModel.php";
-include __DIR__ . "/../View/HttpResponse.php";
+namespace Wither\Controller;
+
+use Wither\Model\UserModel;
+use Wither\Session\Session;
+use Wither\View\HttpResponse;
 
 class UserController {
 
@@ -19,7 +22,7 @@ class UserController {
     }
 
     public static function logout(): void {
-        require_once __DIR__ . "/../Session/Session.php";
+        new Session();
         $_SESSION["logged"] = false;
         HttpResponse::redirectToLogin();
     }

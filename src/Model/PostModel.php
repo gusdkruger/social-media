@@ -1,6 +1,10 @@
 <?php
 
-include __DIR__ . "/../DatabaseConnection/ConnectionFactory.php";
+namespace Wither\Model;
+
+use Wither\DatabaseConnection\ConnectionFactory;
+use Wither\View\HttpResponce;
+use \PDO;
 
 class PostModel {
 
@@ -16,7 +20,6 @@ class PostModel {
             return $stmt->fetchAll();
         }
         catch(PDOException $e) {
-            require_once __DIR__ . "/../View/HttpResponse.php";
             HttpResponse::handlePdoException($e);
         }
     }
@@ -35,7 +38,6 @@ class PostModel {
             return $sucess;
         }
         catch(PDOException $e) {
-            require_once __DIR__ . "/../View/HttpResponse.php";
             HttpResponse::handlePdoException($e);
         }
     }

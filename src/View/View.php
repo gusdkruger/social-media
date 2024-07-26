@@ -1,33 +1,37 @@
 <?php
 
+namespace Wither\View;
+
+use Wither\Session\Session;
+
 class View {
 
     public static function loadHtml(): void {
-        require_once __DIR__ . "/../Session/Session.php";
+        new Session();
         readfile(__DIR__ . "/../../public/html/start.html");
         if($_SESSION["logged"]) {
-            View::readTeamplateHeader();
-            View::readTeamplateFeed();
+            View::readTemplateHeader();
+            View::readTemplateFeed();
         }
         else {
-            View::readTeamplateLogin();
+            View::readTemplateLogin();
         }
         readfile(__DIR__ . "/../../public/html/end.html");
     }
 
-    public static function readTeamplateLogin(): void {
+    public static function readTemplateLogin(): void {
         readfile(__DIR__ . "/../../public/html/login.html");
     }
 
-    public static function readTeamplateSignup(): void {
+    public static function readTemplateSignup(): void {
         readfile(__DIR__ . "/../../public/html/signup.html");
     }
 
-    public static function readTeamplateHeader(): void {
+    public static function readTemplateHeader(): void {
         readfile(__DIR__ . "/../../public/html/header.html");
     }
 
-    public static function readTeamplateFeed(): void {
+    public static function readTemplateFeed(): void {
         readfile(__DIR__ . "/../../public/html/feed.html");
     }
 }

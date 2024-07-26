@@ -1,7 +1,9 @@
 <?php
 
-include __DIR__ . "/../Model/PostModel.php";
-include __DIR__ . "/../View/HttpResponse.php";
+namespace Wither\Controller;
+
+use Wither\Model\PostModel;
+use Wither\View\HttpResponse;
 
 class PostController {
 
