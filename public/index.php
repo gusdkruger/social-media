@@ -11,9 +11,6 @@ spl_autoload_register(function (string $className) {
 
 session_start();
 session_regenerate_id();
-if(!isset($_SESSION["logged"])) {
-    $_SESSION["logged"] = false;
-}
 if(!isset($_SESSION["userID"])) {
     $_SESSION["userID"] = null;
 }

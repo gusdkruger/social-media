@@ -8,6 +8,6 @@ return [
     "POST|/login" => [\Wither\Controller\UserController::class, 'login'],
     "POST|/logout" => [\Wither\Controller\UserController::class, 'logout'],
     "POST|/signup" => [\Wither\Controller\UserController::class, 'signup'],
-    "POST|/feed" => [\Wither\Controller\PostController::class, 'getPosts'],
+    "POST|/loadPosts" => [\Wither\Controller\PostController::class, 'getPosts'],
     "POST|/createPost" => [\Wither\Controller\PostController::class, 'createPost']
 ];
