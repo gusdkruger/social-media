@@ -1,17 +1,13 @@
 <?php
 
-use Wither\View\View;
-use Wither\Controller\UserController;
-use Wither\Controller\PostController;
-
 return [
-    "GET|/" => [View::class, 'loadHtml'],
-    "GET|/feed" => [View::class, 'loadHtml'],
-    "GET|/templateLogin" => [View::class, 'readTemplateLogin'],
-    "GET|/templateSignup" => [View::class, 'readTemplateSignup'],
-    "POST|/login" => [UserController::class, 'login'],
-    "POST|/logout" => [UserController::class, 'logout'],
-    "POST|/signup" => [UserController::class, 'signup'],
-    "POST|/feed" => [PostController::class, 'getPostsBetween'],
-    "POST|/createPost" => [PostController::class, 'createPost']
+    "GET|/" => [\Wither\View\View::class, 'loadHtml'],
+    "GET|/feed" => [\Wither\View\View::class, 'loadHtml'],
+    "GET|/templateLogin" => [\Wither\View\View::class, 'readTemplateLogin'],
+    "GET|/templateSignup" => [\Wither\View\View::class, 'readTemplateSignup'],
+    "POST|/login" => [\Wither\Controller\UserController::class, 'login'],
+    "POST|/logout" => [\Wither\Controller\UserController::class, 'logout'],
+    "POST|/signup" => [\Wither\Controller\UserController::class, 'signup'],
+    "POST|/feed" => [\Wither\Controller\PostController::class, 'getPosts'],
+    "POST|/createPost" => [\Wither\Controller\PostController::class, 'createPost']
 ];

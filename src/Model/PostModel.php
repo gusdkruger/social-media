@@ -8,12 +8,26 @@ use \PDO;
 
 class PostModel {
 
-    public static function getPostsBetween(int $beginID, int $endID): array {
+    public static function getLastPostID(): int {
         try {
             $conn = ConnectionFactory::createConnection();
-            $stmt = $conn->prepare("SELECT u.handle, p.text, p.created, p.like_count FROM post p JOIN user u ON p.user_id = u.id WHERE p.id BETWEEN :beginID AND :endID ORDER BY p.id DESC;");
-            $stmt->bindValue(":beginID", $beginID, PDO::PARAM_INT);
-            $stmt->bindValue(":endID", $endID, PDO::PARAM_INT);
+            $stmt = $conn->prepare("SELECT MAX(id) FROM post;");
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            ConnectionFactory::closeConnection($conn);
+            return $stmt->fetch()["MAX(id)"];
+        }
+        catch(PDOException $e) {
+            HttpResponse::handlePdoException($e);
+        }
+    }
+
+    public static function getPosts(int $startID): array {
+        try {
+            $conn = ConnectionFactory::createConnection();
+            $stmt = $conn->prepare("SELECT u.handle, p.text, p.created, p.like_count FROM post p JOIN user u ON p.user_id = u.id WHERE p.id BETWEEN :endID AND :startID ORDER BY p.id DESC;");
+            $stmt->bindValue(":endID", $startID - 10, PDO::PARAM_INT);
+            $stmt->bindValue(":startID", $startID, PDO::PARAM_INT);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             ConnectionFactory::closeConnection($conn);

@@ -48,7 +48,7 @@ class HttpResponse {
         exit();
     }
 
-    public static function invalidPostText() {
+    public static function invalidPostText(): void  {
         http_response_code(400);
         echo HttpResponse::START_ERROR_MESSAGE . "Post text must be between 3 and 255 charachters" . HttpResponse::END_ERROR_MESSAGE;
         exit();

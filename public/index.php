@@ -9,6 +9,18 @@ spl_autoload_register(function (string $className) {
     }
 });
 
+session_start();
+session_regenerate_id();
+if(!isset($_SESSION["logged"])) {
+    $_SESSION["logged"] = false;
+}
+if(!isset($_SESSION["userID"])) {
+    $_SESSION["userID"] = null;
+}
+if(!isset($_SESSION["currentPostID"])) {
+    $_SESSION["currentPostID"] = null;
+}
+
 $routes = require_once __DIR__ . "/../config/routes.php";
 
 $pathInfo = $_SERVER["PATH_INFO"] ?? "/";

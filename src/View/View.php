@@ -2,12 +2,9 @@
 
 namespace Wither\View;
 
-use Wither\Session\Session;
-
 class View {
 
     public static function loadHtml(): void {
-        new Session();
         readfile(__DIR__ . "/../../public/html/start.html");
         if($_SESSION["logged"]) {
             View::readTemplateHeader();
