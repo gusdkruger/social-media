@@ -9,6 +9,14 @@ spl_autoload_register(function (string $className) {
     }
 });
 
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'domain' => '',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'Strict'
+]);
 session_start();
 session_regenerate_id();
 if(!isset($_SESSION["userID"])) {
@@ -29,12 +37,8 @@ if(array_key_exists($key, $routes)) {
     if(is_callable($staticFunction)) {
         call_user_func($staticFunction);
     }
-    else {
-        http_response_code(500);
-        echo "500 INTERNAL SERVER ERROR<br>Invalid callback: " . $staticFunction;
-    }
 }
 else {
     http_response_code(404);
-    echo "404 NOT FOUND<br>key: $key<br>PATH: " . $_SERVER["PATH_INFO"] . "<br>METHOD: " . $_SERVER["REQUEST_METHOD"];
+    echo "404 NOT FOUND<br>key: $key";
 }

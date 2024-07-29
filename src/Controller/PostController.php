@@ -2,8 +2,8 @@
 
 namespace Wither\Controller;
 
+use Wither\Http\HttpResponse;
 use Wither\Model\PostModel;
-use Wither\View\HttpResponse;
 use Wither\View\View;
 
 class PostController {
@@ -25,17 +25,20 @@ class PostController {
         }
         else if(isset($_POST["post-text"])) {
             $text = $_POST["post-text"];
-            PostController::validadePostText($text);
+            self::validadePostText($text);
             $userID = $_SESSION["userID"];
             if(PostModel::createPost($userID, $text)) {
                 $_SESSION["currentPostID"] = PostModel::getLastPostID();
                 HttpResponse::redirectToFeed();
             }
         }
+        else {
+            HttpResponse::respond(400, null, null);
+        }
     }
 
     private static function validadePostText(string $text): void {
-        if(strlen($text) < 3 && strlen($text) > 255) {
+        if(strlen($text) < 3 || strlen($text) > 255) {
             HttpResponse::invalidPostText();
         }
     }

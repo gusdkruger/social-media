@@ -2,62 +2,73 @@
 
 namespace Wither\View;
 
+use Wither\Http\HttpResponse;
 use Wither\Model\PostModel;
 
 class View {
+    private const PATH_TO_HTML_FOLDER = __DIR__ . "/../../public/html/";
 
-    public static function loadHtml(): void {
-        readfile(__DIR__ . "/../../public/html/start.html");
-        if($_SESSION["userID"]) {
-            $_SESSION["currentPostID"] = PostModel::getLastPostID();
-            View::readTemplateHeader();
-            View::readTemplateFeed();
+    private const HTML_START = self::PATH_TO_HTML_FOLDER . "start.html";
+    private const HTML_END = self::PATH_TO_HTML_FOLDER . "end.html";
+
+    private const HTML_LOGIN = self::PATH_TO_HTML_FOLDER . "login.html";
+    private const HTML_SIGNUP = self::PATH_TO_HTML_FOLDER . "signup.html";
+    private const HTML_HEADER = self::PATH_TO_HTML_FOLDER . "header.html";
+    private const HTML_FEED = self::PATH_TO_HTML_FOLDER . "feed.html";
+
+    public static function loadLogin() {
+        if($_SESSION["userID"] > 0) {
+            HttpResponse::respond(303, [
+                "Location: /feed"
+            ], null);
         }
         else {
-            View::readTemplateLogin();
+            $body = file_get_contents(self::HTML_START);
+            $body .= file_get_contents(self::HTML_LOGIN);
+            $body .= file_get_contents(self::HTML_END);
+            HttpResponse::respond(200, null, $body);
         }
-        readfile(__DIR__ . "/../../public/html/end.html");
+    }
+
+    public static function loadFeed() {
+        if($_SESSION["userID"] > 0) {
+            $_SESSION["currentPostID"] = PostModel::getLastPostID();
+            $body = file_get_contents(self::HTML_START);
+            $body .= file_get_contents(self::HTML_HEADER);
+            $body .= file_get_contents(self::HTML_FEED);
+            $body .= file_get_contents(self::HTML_END);
+            HttpResponse::respond(200, null, $body);
+        }
+        else {
+            HttpResponse::respond(303, [
+                "Location: /"
+            ], null);
+        }
     }
 
     public static function buildPosts(array $posts): void {
+        $body = "";
         if(count($posts) === 0) {
-            echo "<h3>No more posts to load</h3>";
-            exit();
+            $body .= "<h3>No more posts to load</h3>";
         }
-        foreach($posts as $post) {
-            $handle = $post["handle"];
-            $text = $post["text"];
-            $created = $post["created"];
-            $likeCount = $post["like_count"];
-            echo "<div class='post'>
-                    <div class='post__header'>
-                        <h2>@$handle</h2>
-                        <h3>$created</h3>
-                    </div>
-                    <p>$text<p>
-                    <div class='post__footer'>
-                        <h3>$likeCount</h4>
-                        <h2>Comments</h3>
-                    </div>
-                </div>";
+        else {
+            foreach($posts as $post) {
+                $handle = $post["handle"];
+                $text = $post["text"];
+                $created = $post["created"];
+                $likeCount = $post["like_count"];
+                $body .= "<div class='post'><div class='post__header'><h2>@$handle</h2><h3>$created</h3></div><p>$text<p><div class='post__footer'><h2>$likeCount</h2><h3>Comments</h3></div></div>";
+            }
+            $body .= "<h3 class='load-more' hx-post='/loadPosts' hx-trigger='intersect' hx-target='this' hx-swap='outerHTML'>Loading posts</h3>";
         }
-        echo "<h3 class='load-more' hx-post='/loadPosts' hx-trigger='intersect' hx-target='this' hx-swap='outerHTML'>Loading posts</h3>";
-        exit();
+        HttpResponse::respond(200, null, $body);
     }
 
-    public static function readTemplateLogin(): void {
-        readfile(__DIR__ . "/../../public/html/login.html");
+    public static function getTemplateLogin(): void {
+        HttpResponse::respond(200, null, file_get_contents(self::HTML_LOGIN));
     }
 
-    public static function readTemplateSignup(): void {
-        readfile(__DIR__ . "/../../public/html/signup.html");
-    }
-
-    public static function readTemplateHeader(): void {
-        readfile(__DIR__ . "/../../public/html/header.html");
-    }
-
-    public static function readTemplateFeed(): void {
-        readfile(__DIR__ . "/../../public/html/feed.html");
+    public static function getTemplateSignup(): void {
+        HttpResponse::respond(200, null, file_get_contents(self::HTML_SIGNUP));
     }
 }

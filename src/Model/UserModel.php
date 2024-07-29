@@ -3,8 +3,9 @@
 namespace Wither\Model;
 
 use Wither\DatabaseConnection\ConnectionFactory;
-use Wither\View\HttpResponse;
+use Wither\Http\HttpResponse;
 use \PDO;
+use \PDOException;
 
 class UserModel {
 

@@ -2,9 +2,9 @@
 
 namespace Wither\Controller;
 
+use Wither\Http\HttpResponse;
 use Wither\Model\PostModel;
 use Wither\Model\UserModel;
-use Wither\View\HttpResponse;
 
 class UserController {
 
@@ -12,15 +12,20 @@ class UserController {
         if(isset($_POST["email"]) && isset($_POST["password"])) {
             $email = $_POST["email"];
             $password = $_POST["password"];
-            UserController::validadeEmail($email);
-            UserController::validadePassword($password);
+            self::validadeEmail($email);
+            self::validadePassword($password);
             $userID = UserModel::login($email, $password);
-            if($userID !== 0) {
+            if($userID > 0) {
                 $_SESSION["userID"] = $userID;
                 HttpResponse::redirectToFeed();
             }
+            else {
+                HttpResponse::invalidLoginInfo();
+            }
         }
-        HttpResponse::invalidLoginInfo();
+        else {
+            HttpResponse::respond(400, null, null);
+        }
     }
 
     public static function logout(): void {
@@ -35,13 +40,13 @@ class UserController {
             $handle = $_POST["handle"];
             $email = $_POST["email"];
             $password = $_POST["password"];
-            UserController::validadeHanlde($handle);
-            UserController::validadeEmail($email);
-            UserController::validadePassword($password);
+            self::validadeHanlde($handle);
+            self::validadeEmail($email);
+            self::validadePassword($password);
             if($password === $_POST["password-repeat"]) {
                 $passwordHash = password_hash($password, PASSWORD_ARGON2ID);
                 $id = UserModel::signup($handle, $email, $passwordHash);
-                if($id !== 0) {
+                if($id > 0) {
                     $_SESSION["userID"] = $id;
                     HttpResponse::redirectToFeed();
                 }
@@ -49,6 +54,9 @@ class UserController {
             else {
                 HttpResponse::passwordsDontMatch();
             }
+        }
+        else {
+            HttpResponse::respond(400, null, null);
         }
     }
 
@@ -65,7 +73,7 @@ class UserController {
     }
 
     private static function validadePassword(string $password): void {
-        if(strlen($password) < 6 && strlen($password) > 255) {
+        if(strlen($password) < 6 || strlen($password) > 255) {
             HttpResponse::invalidPassword();
         }
     }
