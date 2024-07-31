@@ -54,22 +54,45 @@ CREATE TABLE comment_liked_by (
 	FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
-INSERT INTO user (handle, email, password) VALUES ('User', 'user@wither.com', '123123');
-
 DELIMITER //
+
+CREATE PROCEDURE fill_users()
+BEGIN
+	DECLARE i INT DEFAULT 1;
+	loop_users: LOOP
+		INSERT INTO user (handle, email, password) VALUES (CONCAT('user_id:', i), CONCAT('user', i, '@wither.com'), '123');
+		SET i = i + 1;
+		IF i > 25 THEN
+			LEAVE loop_users;
+		END IF;
+	END LOOP loop_users;
+END //
 
 CREATE PROCEDURE fill_posts()
 BEGIN
 	DECLARE i INT DEFAULT 1;
-	loop_label: LOOP
-		INSERT INTO post (user_id, text, created) VALUES (1, CONCAT('POST ID: ', i, ' | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus egestas egestas. Nunc et dignissim ipsum. Pellentesque dictum finibus augue, ac finibus augue pharetra quis. Nulla quis dictum elit, viverra venenatis mauris.'), '2024-07-26 22:00:00');
+	DECLARE j INT;
+	DECLARE rand_user_id INT;
+	loop_posts: LOOP
+		SET rand_user_id = FLOOR(1 + RAND() * 25);
+		INSERT INTO post (user_id, text, created) VALUES (rand_user_id, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus egestas egestas. Nunc et dignissim ipsum. Pellentesque dictum finibus augue, ac finibus augue pharetra quis. Nulla quis dictum elit, viverra venenatis mauris', '2024-07-31 15:44:00');
+		SET j = 1;
+		loop_comments: LOOP
+			SET rand_user_id = FLOOR(1 + RAND() * 25);
+			INSERT INTO comment (user_id, post_id, text, created) VALUES (rand_user_id, i,  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed finibus egestas egestas. Nunc et dignissim ipsum. Pellentesque dictum finibus augue, ac finibus augue pharetra quis. Nulla quis dictum elit, viverra venenatis mauris.', '2024-07-31 15:46:00');
+			SET j = j + 1;
+			IF j > 50 THEN
+				LEAVE loop_comments;
+			END IF;
+		END LOOP loop_comments;
 		SET i = i + 1;
-		IF i > 100 THEN
-			LEAVE loop_label;
+		IF i > 200 THEN
+			LEAVE loop_posts;
 		END IF;
-	END LOOP loop_label;
+	END LOOP loop_posts;
 END //
 
 DELIMITER ;
 
+CALL fill_users();
 CALL fill_posts();

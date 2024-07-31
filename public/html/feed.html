@@ -1,11 +1,11 @@
 <main class="feed" hx-ext="response-targets">
     <form class="create-post" hx-post="/createPost" hx-target-error="#error-container">
-        <h2>Create a post</h2>
+        <label>Create a post</label>
         <textarea name="post-text" type="text" minlength="3" maxlength="255" required></textarea>
         <div id="error-container"></div>
         <button type="submit">Post</button>
     </form>
     <div class="post-container">
-        <h2 class="loading-posts" hx-post="/loadPosts" hx-trigger="load" hx-target=".post-container" hx-target-4*="this" hx-target-5*="this">Loading posts</h2>
+        <h2 class="loading-posts" hx-post="/loadPosts" hx-trigger="load" hx-target=".post-container" hx-target-error="this">Loading posts</h2>
     </div>
 </main>

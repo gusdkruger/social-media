@@ -16,7 +16,7 @@ class UserController {
             self::validadePassword($password);
             $userID = UserModel::login($email, $password);
             if($userID > 0) {
-                $_SESSION["userID"] = $userID;
+                $_SESSION["userId"] = $userID;
                 HttpResponse::redirectToFeed();
             }
             else {
@@ -29,8 +29,8 @@ class UserController {
     }
 
     public static function logout(): void {
-        $_SESSION["userID"] = null;
-        $_SESSION["currentPostID"] = null;
+        $_SESSION["userId"] = null;
+        $_SESSION["bottomPostId"] = null;
         HttpResponse::redirectToLogin();
     }
 
@@ -47,7 +47,7 @@ class UserController {
                 $passwordHash = password_hash($password, PASSWORD_ARGON2ID);
                 $id = UserModel::signup($handle, $email, $passwordHash);
                 if($id > 0) {
-                    $_SESSION["userID"] = $id;
+                    $_SESSION["userId"] = $id;
                     HttpResponse::redirectToFeed();
                 }
             }

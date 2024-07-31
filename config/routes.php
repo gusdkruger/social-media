@@ -9,5 +9,6 @@ return [
     "POST|/logout" => [\Wither\Controller\UserController::class, 'logout'],
     "POST|/signup" => [\Wither\Controller\UserController::class, 'signup'],
     "POST|/loadPosts" => [\Wither\Controller\PostController::class, 'getPosts'],
-    "POST|/createPost" => [\Wither\Controller\PostController::class, 'createPost']
+    "POST|/createPost" => [\Wither\Controller\PostController::class, 'createPost'],
+    "POST|/loadComments" => [\Wither\Controller\CommentController::class, 'getComments'],
 ];

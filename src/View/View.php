@@ -17,7 +17,7 @@ class View {
     private const HTML_FEED = self::PATH_TO_HTML_FOLDER . "feed.html";
 
     public static function loadLogin() {
-        if($_SESSION["userID"] > 0) {
+        if($_SESSION["userId"] > 0) {
             HttpResponse::respond(303, [
                 "Location: /feed"
             ], null);
@@ -31,8 +31,10 @@ class View {
     }
 
     public static function loadFeed() {
-        if($_SESSION["userID"] > 0) {
-            $_SESSION["currentPostID"] = PostModel::getLastPostID();
+        if($_SESSION["userId"] > 0) {
+            $bottomPostId = PostModel::getLastPostId();
+            $_SESSION["topPostId"] = $bottomPostId;
+            $_SESSION["bottomPostId"] = $bottomPostId;
             $body = file_get_contents(self::HTML_START);
             $body .= file_get_contents(self::HTML_HEADER);
             $body .= file_get_contents(self::HTML_FEED);
@@ -46,18 +48,30 @@ class View {
         }
     }
 
-    public static function buildPosts(array $posts): void {
+    public static function loadPosts(array $posts): void {
         $body = "";
         if(count($posts) === 0) {
-            $body .= "<h3>No more posts to load</h3>";
+            $body = "<h3>No more posts to load</h3>";
         }
         else {
             foreach($posts as $post) {
+                $id = $post["id"];
                 $handle = $post["handle"];
                 $text = $post["text"];
                 $created = $post["created"];
                 $likeCount = $post["like_count"];
-                $body .= "<div class='post'><div class='post__header'><h2>@$handle</h2><h3>$created</h3></div><p>$text<p><div class='post__footer'><h2>$likeCount</h2><h3>Comments</h3></div></div>";
+                $body .= "
+                <div class='post'>
+                    <div class='post__header'>
+                        <h2>@$handle | post_id: $id</h2>
+                        <h3>$created</h3>
+                    </div>
+                    <p>$text<p>
+                    <div class='post__footer'>
+                        <h2>$likeCount</h2>
+                        <h3 hx-post='/loadComments' hx-vals='{\"postId\": \"$id\"}' hx-trigger='click'>Comments</h3>
+                    </div>
+                </div>";
             }
             $body .= "<h3 class='load-more' hx-post='/loadPosts' hx-trigger='intersect' hx-target='this' hx-swap='outerHTML'>Loading posts</h3>";
         }

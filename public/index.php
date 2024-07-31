@@ -2,7 +2,7 @@
 
 spl_autoload_register(function (string $className) {
     $path = str_replace("Wither", "src", $className) . ".php";
-    $path = __DIR__ . "\..\\" . $path;
+    $path = __DIR__ . "\\..\\" . $path;
     $path = str_replace("\\", DIRECTORY_SEPARATOR, $path);
     if(file_exists($path)) {
         require_once $path;
@@ -19,11 +19,14 @@ session_set_cookie_params([
 ]);
 session_start();
 session_regenerate_id();
-if(!isset($_SESSION["userID"])) {
-    $_SESSION["userID"] = null;
+if(!isset($_SESSION["userId"])) {
+    $_SESSION["userId"] = null;
 }
-if(!isset($_SESSION["currentPostID"])) {
-    $_SESSION["currentPostID"] = null;
+if(!isset($_SESSION["topPostId"])) {
+    $_SESSION["topPostId"] = null;
+}
+if(!isset($_SESSION["bottomPostId"])) {
+    $_SESSION["bottomPostId"] = null;
 }
 
 $routes = require_once __DIR__ . "/../config/routes.php";
@@ -40,5 +43,5 @@ if(array_key_exists($key, $routes)) {
 }
 else {
     http_response_code(404);
-    echo "404 NOT FOUND<br>key: $key";
+    echo "404 NOT FOUND<br>$key";
 }
