@@ -193,3 +193,39 @@ header button {
 .post__footer h3 {
     cursor: pointer;
 }
+
+/* COMMENTS */
+
+.comment-container {
+    height: fit-content;
+    max-height: 500px;
+    overflow: scroll;
+}
+
+.comments-container {
+    height: fit-content;
+    max-height: 700px;
+    overflow: scroll;
+}
+
+.create-comment {
+    margin-top: 15px;
+}
+
+.create-comment textarea {
+    resize: none;
+    width: calc(100% - 18px);
+    height: 110px;
+    border-radius: 5px;
+    padding: 8px;
+    border: 1px solid lightgray;
+}
+
+.create-comment button {
+    border: none;
+    cursor: pointer;
+    background-color: var(--text-blue);
+    color: var(--background-white);
+    padding: 5px 10px;
+    border-radius: 5px;
+}

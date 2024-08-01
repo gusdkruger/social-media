@@ -3,6 +3,8 @@
 namespace Wither\Controller;
 
 use Wither\Http\HttpResponse;
+use Wither\Model\CommentModel;
+use Wither\View\View;
 
 class CommentController {
 
@@ -11,9 +13,8 @@ class CommentController {
             HttpResponse::redirectToLogin();
         }
         else if(isset($_POST["postId"])) {
-            http_response_code(200);
-            echo "GET POSTS FOR POST ID:" . $_POST["postId"];
-            exit();
+            $comments = CommentModel::getComments($_POST["postId"]);
+            View::loadComments($comments);
         }
         else {
             HttpResponse::respond(400, null, null);

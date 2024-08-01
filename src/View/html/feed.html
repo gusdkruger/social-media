@@ -6,6 +6,6 @@
         <button type="submit">Post</button>
     </form>
     <div class="post-container">
-        <h2 class="loading-posts" hx-post="/loadPosts" hx-trigger="load" hx-target=".post-container" hx-target-error="this">Loading posts</h2>
+        <h2 class="loading-posts" hx-post="/getPosts" hx-trigger="load" hx-target=".post-container" hx-target-error=".post-container">Loading posts</h2>
     </div>
 </main>
