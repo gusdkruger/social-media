@@ -1,13 +1,13 @@
 <?php
 
-namespace Wither\Model;
+namespace SocialMedia\DAO;
 
-use Wither\DatabaseConnection\ConnectionFactory;
-use Wither\Http\HttpResponse;
+use SocialMedia\DatabaseConnection\ConnectionFactory;
+use SocialMedia\Http\HttpResponse;
 use \PDO;
 use \PDOException;
 
-class CommentModel {
+class CommentDAO {
 
     public static function getComments(int $postId): array {
         

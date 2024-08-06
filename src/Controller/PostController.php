@@ -1,37 +1,39 @@
 <?php
 
-namespace Wither\Controller;
+namespace SocialMedia\Controller;
 
-use Wither\Http\HttpResponse;
-use Wither\Model\PostModel;
-use Wither\View\View;
+use SocialMedia\DAO\PostDAO;
+use SocialMedia\Http\HttpResponse;
+use SocialMedia\View\View;
 
 class PostController {
 
     public static function getPosts(): void {
-        if(!$_SESSION["userId"]) {
-            HttpResponse::redirectToLogin();
-        }
-        else {
-            $posts = PostModel::getPosts($_SESSION["bottomPostId"]);
+        if($_SESSION["userId"] > 0) {
+            $posts = PostDAO::getPosts($_SESSION["bottomPostId"]);
             $_SESSION["bottomPostId"] -= 11;
             View::loadPosts($posts);
+        }
+        else {
+            HttpResponse::redirectToLogin();
         }
     }
 
     public static function createPost(): void {
-        if(!$_SESSION["userId"]) {
-            HttpResponse::redirectToLogin();
-        }
-        else if(isset($_POST["post-text"])) {
-            $text = $_POST["post-text"];
-            self::validadePostText($text);
-            if(PostModel::createPost($_SESSION["userId"], $text)) {
-                HttpResponse::redirectToFeed();
+        if($_SESSION["userId"] > 0) {
+            if(isset($_POST["post-text"])) {
+                $text = $_POST["post-text"];
+                self::validadePostText($text);
+                if(PostDAO::createPost($_SESSION["userId"], $text)) {
+                    HttpResponse::redirectToFeed();
+                }
+            }
+            else {
+                HttpResponse::respond(400, null, null);
             }
         }
         else {
-            HttpResponse::respond(400, null, null);
+            HttpResponse::redirectToLogin();
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wither\Http;
+namespace SocialMedia\Http;
 
 use \PDOException;
 

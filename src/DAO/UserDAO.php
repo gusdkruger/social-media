@@ -1,13 +1,13 @@
 <?php
 
-namespace Wither\Model;
+namespace SocialMedia\DAO;
 
-use Wither\DatabaseConnection\ConnectionFactory;
-use Wither\Http\HttpResponse;
+use SocialMedia\DatabaseConnection\ConnectionFactory;
+use SocialMedia\Http\HttpResponse;
 use \PDO;
 use \PDOException;
 
-class UserModel {
+class UserDAO {
 
     public static function login(string $email, string $password): int {
         try {

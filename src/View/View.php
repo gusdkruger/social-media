@@ -1,23 +1,11 @@
 <?php
 
-namespace Wither\View;
+namespace SocialMedia\View;
 
-use Wither\Http\HttpResponse;
-use Wither\Model\PostModel;
+use SocialMedia\Http\HttpResponse;
+use SocialMedia\DAO\PostDAO;
 
 class View {
-    /*
-    private const PATH_TO_HTML_FOLDER = __DIR__ . "/../../public/html/";
-
-    private const HTML_START = self::PATH_TO_HTML_FOLDER . "start.html";
-    private const HTML_END = self::PATH_TO_HTML_FOLDER . "end.html";
-
-    private const HTML_LOGIN = self::PATH_TO_HTML_FOLDER . "login.html";
-    private const HTML_SIGNUP = self::PATH_TO_HTML_FOLDER . "signup.html";
-    private const HTML_HEADER = self::PATH_TO_HTML_FOLDER . "header.html";
-    private const HTML_FEED = self::PATH_TO_HTML_FOLDER . "feed.html";
-    */
-
     private const HTML_START = __DIR__ . "/html/start.html";
     private const HTML_END = __DIR__ . "/html/end.html";
 
@@ -46,7 +34,7 @@ class View {
 
     public static function loadFeed() {
         if($_SESSION["userId"] > 0) {
-            $bottomPostId = PostModel::getLastPostId();
+            $bottomPostId = PostDAO::getLastPostId();
             $_SESSION["topPostId"] = $bottomPostId;
             $_SESSION["bottomPostId"] = $bottomPostId;
             $body = file_get_contents(self::HTML_START);
@@ -74,6 +62,7 @@ class View {
                 $text = $post["text"];
                 $created = $post["created"];
                 $likeCount = $post["like_count"];
+                $commentCount = $post["comment_count"];
                 ob_start();
                 require self::PHP_POST;
                 $body .= ob_get_clean();

@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function (string $className) {
-    $path = str_replace("Wither", "src", $className) . ".php";
+    $path = str_replace("SocialMedia", "src", $className) . ".php";
     $path = __DIR__ . "\\..\\" . $path;
     $path = str_replace("\\", DIRECTORY_SEPARATOR, $path);
     if(file_exists($path)) {

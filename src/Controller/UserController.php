@@ -1,10 +1,10 @@
 <?php
 
-namespace Wither\Controller;
+namespace SocialMedia\Controller;
 
-use Wither\Http\HttpResponse;
-use Wither\Model\PostModel;
-use Wither\Model\UserModel;
+use SocialMedia\DAO\PostDAO;
+use SocialMedia\DAO\UserDAO;
+use SocialMedia\Http\HttpResponse;
 
 class UserController {
 
@@ -14,7 +14,7 @@ class UserController {
             $password = $_POST["password"];
             self::validadeEmail($email);
             self::validadePassword($password);
-            $userID = UserModel::login($email, $password);
+            $userID = UserDAO::login($email, $password);
             if($userID > 0) {
                 $_SESSION["userId"] = $userID;
                 HttpResponse::redirectToFeed();
@@ -45,7 +45,7 @@ class UserController {
             self::validadePassword($password);
             if($password === $_POST["password-repeat"]) {
                 $passwordHash = password_hash($password, PASSWORD_ARGON2ID);
-                $id = UserModel::signup($handle, $email, $passwordHash);
+                $id = UserDAO::signup($handle, $email, $passwordHash);
                 if($id > 0) {
                     $_SESSION["userId"] = $id;
                     HttpResponse::redirectToFeed();

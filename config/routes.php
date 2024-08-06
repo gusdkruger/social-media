@@ -1,15 +1,15 @@
 <?php
 
 return [
-    "GET|/" => [\Wither\View\View::class, 'loadLogin'],
-    "GET|/feed" => [\Wither\View\View::class, 'loadFeed'],
-    "GET|/templateLogin" => [\Wither\View\View::class, 'getTemplateLogin'],
-    "GET|/templateSignup" => [\Wither\View\View::class, 'getTemplateSignup'],
-    "POST|/templateCommentsFeed" => [\Wither\View\View::class, 'getTemplateCommentsFeed'],
-    "POST|/login" => [\Wither\Controller\UserController::class, 'login'],
-    "POST|/logout" => [\Wither\Controller\UserController::class, 'logout'],
-    "POST|/signup" => [\Wither\Controller\UserController::class, 'signup'],
-    "POST|/getPosts" => [\Wither\Controller\PostController::class, 'getPosts'],
-    "POST|/createPost" => [\Wither\Controller\PostController::class, 'createPost'],
-    "POST|/getComments" => [\Wither\Controller\CommentController::class, 'getComments']
+    "GET|/" => [\SocialMedia\View\View::class, "loadLogin"],
+    "GET|/feed" => [\SocialMedia\View\View::class, "loadFeed"],
+    "GET|/templateLogin" => [\SocialMedia\View\View::class, "getTemplateLogin"],
+    "GET|/templateSignup" => [\SocialMedia\View\View::class, "getTemplateSignup"],
+    //"POST|/templateCommentsFeed" => [\SocialMedia\View\View::class, "getTemplateCommentsFeed"],
+    "POST|/login" => [\SocialMedia\Controller\UserController::class, "login"],
+    "POST|/logout" => [\SocialMedia\Controller\UserController::class, "logout"],
+    "POST|/signup" => [\SocialMedia\Controller\UserController::class, "signup"],
+    "POST|/getPosts" => [\SocialMedia\Controller\PostController::class, "getPosts"],
+    "POST|/createPost" => [\SocialMedia\Controller\PostController::class, "createPost"],
+    //"POST|/getComments" => [\SocialMedia\Controller\CommentController::class, "getComments"]
 ];

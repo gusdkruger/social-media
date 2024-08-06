@@ -1,23 +1,25 @@
 <?php
 
-namespace Wither\Controller;
+namespace SocialMedia\Controller;
 
-use Wither\Http\HttpResponse;
-use Wither\Model\CommentModel;
-use Wither\View\View;
+use SocialMedia\DAO\CommentDAO;
+use SocialMedia\Http\HttpResponse;
+use SocialMedia\View\View;
 
 class CommentController {
 
     public static function getComments(): void {
-        if(!$_SESSION["userId"]) {
-            HttpResponse::redirectToLogin();
-        }
-        else if(isset($_POST["postId"])) {
-            $comments = CommentModel::getComments($_POST["postId"]);
-            View::loadComments($comments);
+        if($_SESSION["userId"] > 0) {
+            if(isset($_POST["postId"])) {
+                $comments = CommentDAO::getComments($_POST["postId"]);
+                View::loadComments($comments);
+            }
+            else {
+                HttpResponse::respond(400, null, null);
+            }
         }
         else {
-            HttpResponse::respond(400, null, null);
+            HttpResponse::redirectToLogin();
         }
     }
 }
