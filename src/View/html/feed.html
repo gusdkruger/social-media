@@ -1,3 +1,4 @@
+<div id="postOverlay"></div>
 <main class="feed" hx-ext="response-targets">
     <form class="create-post" hx-post="/createPost" hx-target-error="#error-container">
         <label>Create a post</label>
@@ -6,6 +7,6 @@
         <button type="submit">Post</button>
     </form>
     <div class="post-container">
-        <h2 class="loading-posts" hx-post="/getPosts" hx-trigger="load" hx-target=".post-container" hx-target-error=".post-container">Loading posts</h2>
+        <h2 class="loading-posts" hx-post="/getFeedPosts" hx-trigger="load" hx-target=".post-container" hx-target-error=".post-container">Loading posts</h2>
     </div>
-</main>
+</main

@@ -23,7 +23,22 @@ class PostDAO {
         }
     }
 
-    public static function getPosts(int $startId): array {
+    public static function getPost(int $postId): array {
+        try {
+            $conn = ConnectionFactory::createConnection();
+            $stmt = $conn->prepare("SELECT p.id, u.handle, p.text, p.created, p.like_count, p.comment_count FROM post p JOIN user u ON p.user_id = u.id WHERE p.id = :postId;");
+            $stmt->bindValue(":postId", $postId, PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            ConnectionFactory::closeConnection($conn);
+            return $stmt->fetch();
+        }
+        catch(PDOException $e) {
+            HttpResponse::handlePdoException($e);
+        }
+    }
+
+    public static function getFeedPosts(int $startId): array {
         try {
             $conn = ConnectionFactory::createConnection();
             $stmt = $conn->prepare("SELECT p.id, u.handle, p.text, p.created, p.like_count, p.comment_count FROM post p JOIN user u ON p.user_id = u.id WHERE p.id BETWEEN :startId AND :endId ORDER BY p.id DESC;");

@@ -14,8 +14,8 @@ class View {
     private const HTML_HEADER = __DIR__ . "/html/header.html";
     private const HTML_FEED = __DIR__ . "/html/feed.html";
 
-    private const PHP_POST = __DIR__ . "/html/post.php";
-    private const PHP_COMMENTS_FEED = __DIR__ . "/html/commentsFeed.php";
+    private const PHP_OVERLAY_POST = __DIR__ . "/html/overlayPost.php";
+    private const PHP_FEED_POST = __DIR__ . "/html/feedPost.php";
     private const PHP_COMMENT = __DIR__ . "/html/comment.php";
 
     public static function loadLogin() {
@@ -50,7 +50,21 @@ class View {
         }
     }
 
-    public static function loadPosts(array $posts): void {
+    public static function loadOverlayPost(array $post): void {
+        $body = "";
+        $id = $post["id"];
+        $handle = $post["handle"];
+        $text = $post["text"];
+        $created = $post["created"];
+        $likeCount = $post["like_count"];
+        $commentCount = $post["comment_count"];
+        ob_start();
+        require self::PHP_OVERLAY_POST;
+        $body .= ob_get_clean();
+        HttpResponse::respond(200, null, $body);
+    }
+
+    public static function loadFeedPosts(array $posts): void {
         $body = "";
         if(count($posts) === 0) {
             $body = "<h3>No more posts to load</h3>";
@@ -64,10 +78,10 @@ class View {
                 $likeCount = $post["like_count"];
                 $commentCount = $post["comment_count"];
                 ob_start();
-                require self::PHP_POST;
+                require self::PHP_FEED_POST;
                 $body .= ob_get_clean();
             }
-            $body .= "<h3 class='load-more' hx-post='/getPosts' hx-trigger='intersect' hx-target='this' hx-swap='outerHTML'>Loading posts</h3>";
+            $body .= "<h3 class='load-more' hx-post='/getFeedPosts' hx-trigger='intersect' hx-target='this' hx-swap='outerHTML'>Loading posts</h3>";
         }
         HttpResponse::respond(200, null, $body);
     }

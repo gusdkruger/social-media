@@ -173,6 +173,15 @@ header button {
 
 /* POST */
 
+#postOverlay {
+    /* width: 100vw;
+    height: 100vh; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
 .post {
     width: 85vw;
     max-width: 600px;
@@ -196,7 +205,7 @@ header button {
 
 /* COMMENTS */
 
-.comment-container {
+.comment-feed {
     height: fit-content;
     max-height: 500px;
     overflow: scroll;
