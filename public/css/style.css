@@ -174,12 +174,33 @@ header button {
 /* POST */
 
 #postOverlay {
-    /* width: 100vw;
-    height: 100vh; */
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
+    background-color: rgba(0,0,0,0.5);
     z-index: 10;
+}
+
+.no-scroll {
+    height: 100%;
+    overflow: hidden;
+}
+
+.closeOverlay {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--text-blue);
+    color: var(--background-white);
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 .post {
@@ -208,13 +229,7 @@ header button {
 .comment-feed {
     height: fit-content;
     max-height: 500px;
-    overflow: scroll;
-}
-
-.comments-container {
-    height: fit-content;
-    max-height: 700px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .create-comment {
@@ -237,4 +252,9 @@ header button {
     color: var(--background-white);
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+.comment__header {
+    display: flex;
+    justify-content: space-between;
 }

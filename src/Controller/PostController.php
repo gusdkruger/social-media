@@ -9,18 +9,19 @@ use SocialMedia\View\View;
 class PostController {
 
     public static function getPostFromUrl(): void {
-        echo "Not implemented yet";
-        exit();
         if($_SESSION["userId"] > 0) {
             if(isset($_GET["id"])) {
                 $post = PostDAO::getPost($_GET["id"]);
+                View::loadPost($post);
             }
             else {
                 HttpResponse::respond(400, null, null);
             }
         }
         else {
-            HttpResponse::redirectToLogin();
+            HttpResponse::respond(303, [
+                "Location: /"
+            ], null);
         }
     }
 

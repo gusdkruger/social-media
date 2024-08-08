@@ -9,7 +9,7 @@
             <button type="submit">Login</button>
             <div id="error-container"></div>
         </form>
-        <a class="ajax-nav" style="text-decoration: line-through; cursor: default;">Forgot password?</a>
+        <a class="ajax-nav" hx-get="/templateRecoverPassword" hx-target="body">Forgot password?</a>
         <a class="ajax-nav" hx-get="/templateSignup" hx-target="body">Create an account</a>
     </div>
 </main>

@@ -4,6 +4,7 @@ return [
     "GET|/" => [\SocialMedia\View\View::class, "loadLogin"],
     "GET|/feed" => [\SocialMedia\View\View::class, "loadFeed"],
     "GET|/templateLogin" => [\SocialMedia\View\View::class, "getTemplateLogin"],
+    "GET|/templateRecoverPassword" => [\SocialMedia\View\View::class, "getTemplateRecoverPassword"],
     "GET|/templateSignup" => [\SocialMedia\View\View::class, "getTemplateSignup"],
     "GET|/post" => [\SocialMedia\Controller\PostController::class, "getPostFromUrl"],
     "POST|/login" => [\SocialMedia\Controller\UserController::class, "login"],

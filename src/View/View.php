@@ -10,11 +10,17 @@ class View {
     private const HTML_END = __DIR__ . "/html/end.html";
 
     private const HTML_LOGIN = __DIR__ . "/html/login.html";
+    private const HTML_RECOVER_PASSWORD = __DIR__ . "/html/recoverPassword.html";
     private const HTML_SIGNUP = __DIR__ . "/html/signup.html";
     private const HTML_HEADER = __DIR__ . "/html/header.html";
     private const HTML_FEED = __DIR__ . "/html/feed.html";
 
-    private const PHP_OVERLAY_POST = __DIR__ . "/html/overlayPost.php";
+    private const HTML_BUTTON_CLOSE_OVERLAY = __DIR__ . "/html/buttonCloseOverlay.html";
+    private const HTML_LOAD_MORE_POSTS = __DIR__ . "/html/loadMorePosts.html";
+    private const HTML_NO_COMMENTS_YET= __DIR__ . "/html/noCommentsYet.html";
+    private const HTML_NO_MORE_POSTS = __DIR__ . "/html/noMorePosts.html";
+
+    private const PHP_POST = __DIR__ . "/html/post.php";
     private const PHP_FEED_POST = __DIR__ . "/html/feedPost.php";
     private const PHP_COMMENT = __DIR__ . "/html/comment.php";
 
@@ -50,16 +56,22 @@ class View {
         }
     }
 
-    public static function loadOverlayPost(array $post): void {
-        $body = "";
-        $id = $post["id"];
-        $handle = $post["handle"];
-        $text = $post["text"];
-        $created = $post["created"];
-        $likeCount = $post["like_count"];
-        $commentCount = $post["comment_count"];
+    public static function loadPost(array $post): void {
+        $body = file_get_contents(self::HTML_START);
+        $body .= file_get_contents(self::HTML_HEADER);
+        $body .= "<main class='feed'>";
         ob_start();
-        require self::PHP_OVERLAY_POST;
+        require self::PHP_POST;
+        $body .= ob_get_clean();
+        $body .= "</main>";
+        $body .= file_get_contents(self::HTML_END);
+        HttpResponse::respond(200, null, $body);
+    }
+
+    public static function loadOverlayPost(array $post): void {
+        $body = file_get_contents(self::HTML_BUTTON_CLOSE_OVERLAY);
+        ob_start();
+        require self::PHP_POST;
         $body .= ob_get_clean();
         HttpResponse::respond(200, null, $body);
     }
@@ -67,21 +79,15 @@ class View {
     public static function loadFeedPosts(array $posts): void {
         $body = "";
         if(count($posts) === 0) {
-            $body = "<h3>No more posts to load</h3>";
+            $body .= file_get_contents(self::HTML_NO_MORE_POSTS);
         }
         else {
             foreach($posts as $post) {
-                $id = $post["id"];
-                $handle = $post["handle"];
-                $text = $post["text"];
-                $created = $post["created"];
-                $likeCount = $post["like_count"];
-                $commentCount = $post["comment_count"];
                 ob_start();
                 require self::PHP_FEED_POST;
                 $body .= ob_get_clean();
             }
-            $body .= "<h3 class='load-more' hx-post='/getFeedPosts' hx-trigger='intersect' hx-target='this' hx-swap='outerHTML'>Loading posts</h3>";
+            $body .= file_get_contents(self::HTML_LOAD_MORE_POSTS);
         }
         HttpResponse::respond(200, null, $body);
     }
@@ -101,15 +107,10 @@ class View {
     public static function loadComments(array $comments): void {
         $body = "";
         if(count($comments) === 0) {
-            $body = "<h3>No comment yet</h3>";
+            $body .= file_get_contents(self::HTML_NO_COMMENTS_YET);
         }
         else {
             foreach($comments as $comment) {
-                $id = $comment["id"];
-                $handle = $comment["handle"];
-                $text = $comment["text"];
-                $created = $comment["created"];
-                $likeCount = $comment["like_count"];
                 ob_start();
                 require self::PHP_COMMENT;
                 $body .= ob_get_clean();
@@ -120,6 +121,10 @@ class View {
 
     public static function getTemplateLogin(): void {
         HttpResponse::respond(200, null, file_get_contents(self::HTML_LOGIN));
+    }
+
+    public static function getTemplateRecoverPassword(): void {
+        HttpResponse::respond(200, null, file_get_contents(self::HTML_RECOVER_PASSWORD));
     }
 
     public static function getTemplateSignup(): void {
